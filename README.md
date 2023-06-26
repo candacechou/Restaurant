@@ -38,7 +38,7 @@ This project is built with Node.js + Express.
 1. Clone this repository.
 
 ``` 
-$ git clone 
+$ git clone https://github.com/candacechou/Restaurant
 ```
 
 2. source into the directory
