@@ -14,6 +14,7 @@ This project is built with Node.js + Express.
   - rating
   - Details
 
+![search page](./images/index.png)
 2. Users can click on a restaurant to view its detailed information, which includes:
 
   - Category
@@ -23,12 +24,15 @@ This project is built with Node.js + Express.
   - Images
   - Searching for Restaurants
 
+![search page](./images/details.png)
 
 3. Users can also find specific restaurants using specific keywords:
 
   - Search by restaurant name.
   - Search by restaurant category.
 
+  
+![search page](./images/search.png)
 
 ## Installation 
 1. Clone this repository.
