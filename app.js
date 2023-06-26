@@ -19,8 +19,28 @@ app.get('/', (req, res) => {
 })
 
 
+app.get('/search', (req, res) => {
+  const keyword = req.query.search?.trim()
+  if (keyword.length !== 0) {
+    const MatchedRestaurant = restaurants.filter((rest) =>
+      rest.name.toLowerCase().includes(keyword) ||
+      rest.category.toLowerCase().includes(keyword))
+    res.render('index', { restaurants: MatchedRestaurant, keyword })
+  }
+  else {
+    res.redirect('/restaurant')
+  }
+
+})
+
 app.get('/restaurant', (req, res) => {
-  res.render('index', { restaurants })
+  res.render('index', { restaurants, keyword: "" })
+
+})
+app.get('/restaurant/:id', (req, res) => {
+  const id = req.params.id
+  const restaurant = restaurants.find((mv) => mv.id.toString() === id)
+  res.render('details', { restaurant })
 })
 
 app.listen(port, () => {

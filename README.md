@@ -1,10 +1,36 @@
 # Restaurant App
 
-This project includes the information of the favorite restaurants. 
+This repository contains a collection of restaurants along with their basic information.
 
 This project is built with Node.js + Express.
 
-## Install 
+## Homepage
+
+1. On the homepage, users can view a list of all the restaurants and their details:
+
+  - photo
+  - name
+  - category
+  - rating
+  - Details
+
+2. Users can click on a restaurant to view its detailed information, which includes:
+
+  - Category
+  - Address
+  - Phone number
+  - Description
+  - Images
+  - Searching for Restaurants
+
+
+3. Users can also find specific restaurants using specific keywords:
+
+  - Search by restaurant name.
+  - Search by restaurant category.
+
+
+## Installation 
 1. Clone this repository.
 
 ``` 
@@ -36,4 +62,10 @@ RESTAURANT/ $ npm i express-handlebars
 
 ```
 RESTAURANT/ $  npm run dev 
+```
+
+7. to stop :
+
+```
+RESTAURANT/ $ CTRL+C
 ```
