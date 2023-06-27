@@ -22,9 +22,11 @@ app.get('/', (req, res) => {
 app.get('/search', (req, res) => {
   const keyword = req.query.search?.trim()
   if (keyword.length !== 0) {
-    const MatchedRestaurant = restaurants.filter((rest) =>
-      rest.name.toLowerCase().includes(keyword) ||
-      rest.category.toLowerCase().includes(keyword))
+    const MatchedRestaurant = restaurants.filter((rest) => Object.values(rest).some((property) => {
+      if (typeof property === 'string') {
+        return property.toLowerCase() === keyword.toLowerCase()
+      }
+    }))
     res.render('index', { restaurants: MatchedRestaurant, keyword })
   }
   else {
