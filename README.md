@@ -47,22 +47,18 @@ $ git clone https://github.com/candacechou/Restaurant
 $ cd RESTAURANT
 ```
 
-3. Install Express via npm
+3. Install via npm
 
 ```
-RESTAURANT/ $  npm i express
+RESTAURANT/ $  npm install
 ```
-4. Install Express handler
-```
-RESTAURANT/ $ npm i express-handlebars
-```
-5. raise the app.js via nodemon
+4. raise the app.js via nodemon
 
 ```
 RESTAURANT/ $  npm run dev 
 ```
 
-6. to stop :
+5. to stop :
 
 ```
 RESTAURANT/ $ CTRL+C
