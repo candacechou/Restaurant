@@ -2,13 +2,14 @@ const express = require('express')
 const { engine } = require('express-handlebars')
 const app = express()
 const port = 3000
+const { Op } = require('sequelize')
 
 // import restaurant json
 //const restaurants = require('./public/jsons/restaurant.json').results
 
 // database
 const db = require('./models')
-const restaurants = db.restaurant_infos
+const restaurants = db.Restaurant
 app.engine('.hbs', engine({ extname: '.hbs' }))
 app.set('view engine', '.hbs')
 app.set('views', './views')
@@ -23,28 +24,50 @@ app.get('/', (req, res) => {
 
 app.get('/search', (req, res) => {
   const keyword = req.query.search?.trim()
-  if (keyword.length !== 0) {
-    const MatchedRestaurant = restaurants.filter((rest) => Object.values(rest).some((property) => {
-      if (typeof property === 'string') {
-        return property.toLowerCase() === keyword.toLowerCase()
+  if (keyword.length != 0) {
+    let stringColumnNames = Object.keys(restaurants.rawAttributes).filter(columnName => {
+      const columnType = restaurants.rawAttributes[columnName].type.key;
+      return columnType === 'STRING' || columnType === 'TEXT';
+    })
+    return restaurants.findAll(
+      {
+        attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+        raw: true,
+        where: {
+          [Op.or]: stringColumnNames.map(key => ({
+            [key]: {
+              [Op.like]: "%" + keyword.toLowerCase() + "%"
+            }
+          }))
+        }
       }
-    }))
-    res.render('index', { restaurants: MatchedRestaurant, keyword })
+    )
+      .then((restaurants) => res.render('index', { restaurants, keyword: "" }))
+      .catch((err) => res.status(422).json(err))
   }
   else {
     res.redirect('/restaurant')
   }
-
 })
 
 app.get('/restaurant', (req, res) => {
-  res.render('index', { restaurants, keyword: "" })
+  return restaurants.findAll(
+    {
+      attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+      raw: true
+    }
+  )
+    .then((restaurants) => res.render('index', { restaurants, keyword: "" }))
+    .catch((err) => res.status(422).json(err))
 
 })
 app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
-  const restaurant = restaurants.find((mv) => mv.id.toString() === id)
-  res.render('details', { restaurant })
+  return restaurants.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    raw: true
+  }).then((restaurant) => res.render('details', { restaurant }))
+    .catch((err) => console.log(err))
 })
 
 

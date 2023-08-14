@@ -14,7 +14,7 @@ module.exports = {
     */
     const sample = require('../public/jsons/restaurant.json');
 
-    await queryInterface.bulkInsert('restaurant_info', sample.results, {});
+    await queryInterface.bulkInsert('restaurants', sample.results, {});
   },
 
   async down(queryInterface, Sequelize) {
@@ -24,7 +24,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('restaurant_info', null, {});
+    await queryInterface.bulkDelete('restaurants', null, {});
   }
 
 }
