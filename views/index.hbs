@@ -45,25 +45,22 @@
                 {{restaurant.rating}}
                 <i class="fas fa-star fa-xs"></i>
               </span>
+            </div>
 
-              {{!-- details --}}
-              <a class="btn btn-major btn-success" href="/restaurant/{{restaurant.id}}" id="create-button"><i
+            <div class="index-three-button"> {{!-- details --}}
+              <a class="btn btn-major btn-primary btn-sm" href="/restaurant/{{restaurant.id}}" id="create-button"><i
                   class="fas fa-search">
                   Details
-                </i></a>
-              {{!-- modify --}}
-              <a class="btn btn-major btn-success" href="/restaurant/{{restaurant.id}}/edit" id="create-button"><i
-                  class="fas fa-search">
+                </i></a> {{!-- modify --}} <a class="btn btn-major btn-success btn-sm"
+                href="/restaurant/{{restaurant.id}}/edit" id="create-button"><i class="fas fa-search">
                   Modify
                 </i></a>
               {{!-- delete --}}
-              {{!--
-              <a class="btn btn-major btn-success" href="/restaurant/new" id="delete-button-{{restaurant.id}}"><i
-                  class="fas fa-search">
-                  Delete
-                </i></a> --}}
-
+              <form action="/restaurant/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
             </div>
+
 
           </div>
         </div>

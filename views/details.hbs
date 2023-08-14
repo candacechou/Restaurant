@@ -1,4 +1,10 @@
-<h1 class="mb-1 restaurant-show-title">{{restaurant.name}}</h1>
+<h1 class="mb-1 restaurant-show-title">{{restaurant.name}}
+  <span class="badge rounded-pill bg-danger font-weight-normal">
+    {{restaurant.rating}}
+    <i class="fas fa-star fa-xs"></i>
+  </span>
+</h1>
+
 <div class="container">
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
@@ -37,5 +43,19 @@
       <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurant.image}}" alt="{{restaurant.name}}"
         style="max-width: 600px;">
     </div>
+  </div>
+  <div class="details-two-button">
+    <a class="btn btn-major btn-primary btn-sm" href="/restaurant" id="create-button"><i class="fas fa-search">
+        Return
+      </i></a>
+    {{!-- modify --}}
+    <a class="btn btn-major btn-success btn-sm" href="/restaurant/{{restaurant.id}}/edit" id="create-button"><i
+        class="fas fa-search">
+        Modify
+      </i></a>
+    {{!-- delete --}}
+    <form action="/restaurant/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline;">
+      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+    </form>
   </div>
 </div>

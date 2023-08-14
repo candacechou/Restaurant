@@ -62,6 +62,13 @@ app.get('/restaurant', (req, res) => {
     .catch((err) => res.status(422).json(err))
 
 })
+app.delete('/restaurant/:id', (req, res) => {
+  console.log("on app delete")
+  const id = req.params.id
+  return restaurants.destroy({ where: { id } })
+    .then(() => res.redirect('/restaurant'))
+})
+
 app.get('/restaurant/new', (req, res) => {
   return res.render('new')
 })
@@ -88,7 +95,7 @@ app.post('/restaurant', (req, res) => {
     rating: req.body.rating,
     description: req.body.description
   })
-    .then(() => res.redirect('/restaurants'))
+    .then(() => res.redirect('/restaurant'))
     .catch((err) => console.log(err))
 })
 
@@ -123,9 +130,7 @@ app.put('/restaurant/:id', (req, res) => {
     .catch((err) => console.log(err))
 })
 
-app.delete('/restaurant/:id', (req, res) => {
-  res.send('delete restaurant')
-})
+
 
 app.listen(port, () => {
   console.log('express server running on <http://localhost>:${port}')
