@@ -4,9 +4,11 @@ const app = express()
 const port = 3000
 
 // import restaurant json
-const restaurants = require('./public/jsons/restaurant.json').results
+//const restaurants = require('./public/jsons/restaurant.json').results
 
-
+// database
+const db = require('./models')
+const restaurants = db.restaurant_infos
 app.engine('.hbs', engine({ extname: '.hbs' }))
 app.set('view engine', '.hbs')
 app.set('views', './views')
@@ -43,6 +45,31 @@ app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
   const restaurant = restaurants.find((mv) => mv.id.toString() === id)
   res.render('details', { restaurant })
+})
+
+
+app.get('/restaurant/new', (req, res) => {
+  res.send('create restaurant')
+})
+
+app.post('/restaurant', (req, res) => {
+  res.send('add restaurant')
+})
+
+app.get('/restaurant/:id', (req, res) => {
+  res.send(`get restaurant: ${req.params.id}`)
+})
+
+app.get('/restaurant/:id/edit', (req, res) => {
+  res.send(`get restaurant edit: ${req.params.id}`)
+})
+
+app.put('/restaurant/:id', (req, res) => {
+  res.send('modify restaurant')
+})
+
+app.delete('/restaurant/:id', (req, res) => {
+  res.send('delete restaurant')
 })
 
 app.listen(port, () => {
