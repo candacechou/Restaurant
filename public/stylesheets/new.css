@@ -1,0 +1,16 @@
+.create-form-div {
+  background-color: antiquewhite;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-bottom: 10%;
+}
+
+.create-item-div {
+  padding: 1em 2em;
+  text-align: center;
+  justify-content: space-between;
+}
+
+#create-submit-btn {
+  margin-bottom: 20%;
+}

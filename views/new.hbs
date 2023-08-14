@@ -1,0 +1,75 @@
+<h1 class="mb-1 restaurant-show-title">New Restaurant</h1>
+<center>
+  <div class="create-form-body">
+    <form action="/restaurant" method="POST" class="create-form-container">
+      <div class="create-form-div">
+        <div class="create-item-div">
+          <label>中文名稱: </label>
+          <input type="text" placeholder="name(CN)" name="name" required />
+        </div>
+
+        <div class="create-item-div">
+          <label>英文名稱: </label>
+          <input type="text" placeholder="Name(EN)" name="name_en" required />
+
+        </div>
+
+        <div class="create-item-div">
+          <label>餐廳類別: </label>
+          <select id="category" name="category" required>
+            <option value="" selected disabled>--請選擇一個選項--</option>
+            <option>中東料理</option>
+            <option>日本料理</option>
+            <option>義式餐廳</option>
+            <option>美式</option>
+            <option>酒吧</option>
+            <option>咖啡</option>
+            <option>台式料理</option>
+            <option>越南料理</option>
+            <option>韓式料理</option>
+            <option>飲料店</option>
+            <option>零食甜點</option>
+          </select>
+        </div>
+
+        <div class="create-item-div">
+          <label>照片 URL: </label>
+          <input type="url" placeholder="Image URL..." name="image" required />
+        </div>
+
+        <div class="create-item-div">
+          <label>餐廳住址: </label>
+          <input type="text" placeholder="Location..." name="location" required />
+        </div>
+
+        <div class="create-item-div">
+          <label>電話號碼: </label>
+          <input type="tel" placeholder="Phone Number..." name="phone" required />
+        </div>
+
+        <div class="create-item-div">
+          <label>谷歌地圖: </label>
+          <input type="url" placeholder="Google Map..." name="google_map" required />
+        </div>
+
+        <div class="create-item-div">
+          <label>餐廳評分: </label>
+          <select id="rating" name="rating" required>
+            <option value="" selected disabled>-----Rating-----</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+
+        <div class="create-item-div">
+          <label>餐廳介紹: </label>
+          <input type="description" placeholder="Description" name="description" required />
+        </div>
+
+        <button class="btn btn-major btn-success " id="create-submit-btn" type="submit">Create</button>
+      </div>
+    </form>
+</center>

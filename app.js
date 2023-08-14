@@ -3,7 +3,7 @@ const { engine } = require('express-handlebars')
 const app = express()
 const port = 3000
 const { Op } = require('sequelize')
-
+app.use(express.urlencoded({ extended: true }))
 // import restaurant json
 //const restaurants = require('./public/jsons/restaurant.json').results
 
@@ -15,7 +15,7 @@ app.set('view engine', '.hbs')
 app.set('views', './views')
 app.use(express.static('public'))
 
-
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.redirect('/restaurant');
@@ -61,6 +61,9 @@ app.get('/restaurant', (req, res) => {
     .catch((err) => res.status(422).json(err))
 
 })
+app.get('/restaurant/new', (req, res) => {
+  return res.render('new')
+})
 app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
   return restaurants.findByPk(id, {
@@ -71,12 +74,21 @@ app.get('/restaurant/:id', (req, res) => {
 })
 
 
-app.get('/restaurant/new', (req, res) => {
-  res.send('create restaurant')
-})
-
 app.post('/restaurant', (req, res) => {
-  res.send('add restaurant')
+  console.log(req.body.name)
+  return restaurants.create({
+    name: req.body.name,
+    name_en: req.body.name_en,
+    category: req.body.category,
+    image: req.body.image,
+    location: req.body.location,
+    phone: req.body.phone,
+    google_map: req.body.google_map,
+    rating: req.body.rating,
+    description: req.body.description
+  })
+    .then(() => res.redirect('/restaurants'))
+    .catch((err) => console.log(err))
 })
 
 app.get('/restaurant/:id', (req, res) => {
