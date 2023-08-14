@@ -76,3 +76,4 @@ RESTAURANT/ $ CTRL+C
 - express-handlebars
 - Bootstraps
 - mysql2, sequelize, sequelize-cli
+- method-override

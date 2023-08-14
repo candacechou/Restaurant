@@ -1,0 +1,71 @@
+<h1 class="mb-1 restaurant-show-title">Modify Restaurant</h1>
+<center>
+  <div class="create-form-body">
+    <form action="/restaurant/{{restaurant.id}}?_method=PUT" method="POST" class="create-form-container">
+      <div class="create-form-div">
+        <div class="create-item-div">
+          <label>中文名稱: </label>
+          <input type="text" placeholder="{{restaurant.name}}" name="name" value="{{restaurant.name}}" />
+        </div>
+
+        <div class="create-item-div">
+          <label>英文名稱: </label>
+          <input type="text" placeholder="{{restaurant.name_en}}" name="name_en" value="{{restaurant.name_en}}" />
+
+        </div>
+
+        <div class="create-item-div">
+          <label>餐廳類別: </label>
+          <select id="category" name="category">
+            <option value="" value="{{restaurant.category}}" selected hidden disabled>{{restaurant.category}}</option>
+            <option>中東料理</option>
+            <option>日本料理</option>
+            <option>義式餐廳</option>
+            <option>美式</option>
+            <option>酒吧</option>
+            <option>咖啡</option>
+            <option>台式料理</option>
+            <option>越南料理</option>
+            <option>韓式料理</option>
+            <option>飲料店</option>
+            <option>零食甜點</option>
+          </select>
+        </div>
+
+        <div class="create-item-div">
+          <label>照片 URL: </label>
+          <input type="url" placeholder="Image URL..." name="image" value="{{restaurant.image}}" />
+        </div>
+
+        <div class="create-item-div">
+          <label>餐廳住址: </label>
+          <input type="text" placeholder="{{restaurant.location}}" name="location" value="{{restaurant.location}}" />
+        </div>
+
+        <div class="create-item-div">
+          <label>電話號碼: </label>
+          <input type="tel" placeholder="{{restaurant.phone}}" name="phone" value="{{restaurant.phone}}" />
+        </div>
+
+        <div class="create-item-div">
+          <label>谷歌地圖: </label>
+          <input type="url" placeholder="{{restaurant.google_map}}" name="google_map"
+            value="{{restaurant.google_map}}" />
+        </div>
+
+        <div class=" create-item-div">
+          <label>餐廳評分: </label>
+          <input type="number" placeholder="{{restaurant.rating}}" name="rating" value="{{restaurant.rating}}" min="1"
+            max="5" step="0.1" />
+        </div>
+
+        <div class="create-item-div">
+          <label>餐廳介紹: </label>
+          <textarea type="description" placeholder="{{restaurant.description}}" name="description"
+            value="{{restaurant.description}}"> {{restaurant.description}}</textarea>
+        </div>
+
+        <button class="btn btn-major btn-success " id="create-submit-btn" type="submit">Modify</button>
+      </div>
+    </form>
+</center>

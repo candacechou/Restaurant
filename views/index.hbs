@@ -31,23 +31,42 @@
     <div class="col-md-10 col-12 mx-auto">
       <div class="row row-cols-sm-3">
         {{#each restaurants as |restaurant|}}
-        <a href="/restaurant/{{restaurant.id}}" class="text-secondary">
-          <div class="card mb-3">
-            <img class="card-img-top" src="{{restaurant.image}}" alt="{{restaurant.name}}">
-            <div class="card-body p-3">
-              <h6 class="card-title mb-1">{{restaurant.name}}</h6>
 
-              <div class="restaurant-category mb-1">
-                <i class="fas fa-utensils pr-2"></i> {{restaurant.category}}
-              </div>
+        <div class="card mb-3">
+          <img class="card-img-top" src="{{restaurant.image}}" alt="{{restaurant.name}}">
+          <div class="card-body p-3">
+            <h6 class="card-title mb-1">{{restaurant.name}}</h6>
 
+            <div class="restaurant-category mb-1">
+              <i class="fas fa-utensils pr-2"></i> {{restaurant.category}}
+            </div>
+            <div>
               <span class="badge rounded-pill bg-danger font-weight-normal">
                 {{restaurant.rating}}
                 <i class="fas fa-star fa-xs"></i>
               </span>
+
+              {{!-- details --}}
+              <a class="btn btn-major btn-success" href="/restaurant/{{restaurant.id}}" id="create-button"><i
+                  class="fas fa-search">
+                  Details
+                </i></a>
+              {{!-- modify --}}
+              <a class="btn btn-major btn-success" href="/restaurant/{{restaurant.id}}/edit" id="create-button"><i
+                  class="fas fa-search">
+                  Modify
+                </i></a>
+              {{!-- delete --}}
+              {{!--
+              <a class="btn btn-major btn-success" href="/restaurant/new" id="delete-button-{{restaurant.id}}"><i
+                  class="fas fa-search">
+                  Delete
+                </i></a> --}}
+
             </div>
+
           </div>
-        </a>
+        </div>
         {{/each}}
       </div>
     </div>
