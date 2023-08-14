@@ -35,6 +35,8 @@ MVC (Model, View and Control) +  CRUD (create, read, update and delete) function
 
   
 ![search page](./images/search.png)
+4. User can create (and delete) their own restaurant.
+![search page](./images/create.png)
 ## Seeders
 The `restaurant.json` file is not a seeder file.
 ## Installation 

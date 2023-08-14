@@ -32,7 +32,7 @@ app.get('/search', (req, res) => {
     })
     return restaurants.findAll(
       {
-        attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+        attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'description'],
         raw: true,
         where: {
           [Op.or]: stringColumnNames.map(key => ({
@@ -43,7 +43,7 @@ app.get('/search', (req, res) => {
         }
       }
     )
-      .then((restaurants) => res.render('index', { restaurants, keyword: "" }))
+      .then((restaurants) => res.render('index', { restaurants, keyword }))
       .catch((err) => res.status(422).json(err))
   }
   else {
