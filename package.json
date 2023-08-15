@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "seed:create": "npx sequelize db:seed --seed restaurant-seeder.js",
+    "seed:undo": "npx sequelize db:seed:undo  --seed restaurant-seeder.js"
   },
   "keywords": [],
   "author": "",
