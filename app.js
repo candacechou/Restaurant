@@ -1,7 +1,8 @@
 const express = require('express')
 const { engine } = require('express-handlebars')
+const flash = require('connect-flash')
 const methodOverride = require('method-override')
-
+const session = require('express-session')
 const router = require('./routes')
 const app = express()
 const port = 3000
@@ -21,6 +22,13 @@ app.use(express.static('public'))
 
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
+app.use(session({
+  secret: 'ThisIsSecret',
+  resave: true,
+  saveUninitialized: false
+}))
+app.use(flash())
 app.get('/', (req, res) => {
   res.redirect('/restaurant');
 })

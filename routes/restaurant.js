@@ -6,14 +6,22 @@ const router = express.Router()
 
 const db = require('../models')
 const restaurants = db.Restaurant
+
+//default
+let order_option = "A->Z"
+let page = 1
+let limit = 6
 router.use(methodOverride('_method'))
 
 
 router.get('/', (req, res) => {
-  let order_option = req.query.order_selection
+  if (req.query.order_selection) {
+    order_option = req.query.order_selection
+    page = 1
+  }
+
   let orders = []
   if (order_option === "A->Z") {
-    console.log('!')
     orders = ['name', 'ASC']
   }
   else if (order_option === 'Z->A') {
@@ -30,6 +38,12 @@ router.get('/', (req, res) => {
   else {
     orders = []
   }
+  // page
+  if (req.query.page) {
+    page = parseInt(req.query.page) || 1
+  }
+
+
   return restaurants.findAll(
     {
       order: [orders],
@@ -40,7 +54,21 @@ router.get('/', (req, res) => {
   )
     .then((restaurants) => {
       // do sorting ...
-      res.render('index', { restaurants, keyword: "", order_selection: req.query.order_selection })
+      // sort
+      if ((page * limit - restaurants.length) > limit) {
+        page = page - 1
+      }
+      else {
+        res.render('index', {
+          restaurants: restaurants.slice((page - 1) * limit, page * limit),
+          prev: page > 1 ? page - 1 : page,
+          next: page + 1,
+          page: page,
+          keyword: "",
+          order_selection: order_option
+        })
+      }
+
     })
     .catch((err) => res.status(422).json(err))
 

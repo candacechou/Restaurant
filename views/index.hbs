@@ -15,7 +15,7 @@
     </div>
   </div>
 </div>
-<div class="secondary-bar row">
+<div class="index-body secondary-bar row">
   <div class="secondary-bar-outer">
     <div class="secondary-bar-inner">
       <div class="create-bar col-sm-3">
@@ -101,5 +101,21 @@
         {{/each}}
       </div>
     </div>
+  </div>
+</div>
+
+{{!-- page --}}
+<div class=" index-body page-footer pagination justify-content-center row" style="padding-left:10%;padding-right:10%">
+  <div class="col-sm-1">
+    <form method="GET" style="display: inline;">
+      <input type="hidden" name="page" value="{{prev}}" type="hidden">
+      <button type="submit" class="btn btn-primary">prev</button>
+    </form>
+  </div>
+  <div class="col-sm-1">
+    <form method="GET" style="display: inline;">
+      <input type="hidden" name="page" value="{{next}}" type="hidden">
+      <button type="submit" class="btn btn-primary">next</button>
+    </form>
   </div>
 </div>
