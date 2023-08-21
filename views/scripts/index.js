@@ -1,0 +1,1 @@
+const formDeleteRest = document.getElementById("sort-bar");

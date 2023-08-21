@@ -1,16 +1,19 @@
 const express = require('express')
 const { engine } = require('express-handlebars')
 const methodOverride = require('method-override')
+
+const router = require('./routes')
 const app = express()
 const port = 3000
 const { Op } = require('sequelize')
 app.use(express.urlencoded({ extended: true }))
-// import restaurant json
-//const restaurants = require('./public/jsons/restaurant.json').results
-
-// database
 const db = require('./models')
 const restaurants = db.Restaurant
+// import restaurant json
+//const restaurants = require('./public/jsons/restaurant.json').results
+app.use(router)
+// database
+
 app.engine('.hbs', engine({ extname: '.hbs' }))
 app.set('view engine', '.hbs')
 app.set('views', './views')
@@ -32,7 +35,7 @@ app.get('/search', (req, res) => {
     })
     return restaurants.findAll(
       {
-        attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'description'],
+        attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
         raw: true,
         where: {
           [Op.or]: stringColumnNames.map(key => ({
@@ -51,84 +54,6 @@ app.get('/search', (req, res) => {
   }
 })
 
-app.get('/restaurant', (req, res) => {
-  return restaurants.findAll(
-    {
-      attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
-      raw: true
-    }
-  )
-    .then((restaurants) => res.render('index', { restaurants, keyword: "" }))
-    .catch((err) => res.status(422).json(err))
-
-})
-app.delete('/restaurant/:id', (req, res) => {
-  console.log("on app delete")
-  const id = req.params.id
-  return restaurants.destroy({ where: { id } })
-    .then(() => res.redirect('/restaurant'))
-})
-
-app.get('/restaurant/new', (req, res) => {
-  return res.render('new')
-})
-app.get('/restaurant/:id', (req, res) => {
-  const id = req.params.id
-  return restaurants.findByPk(id, {
-    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
-    raw: true
-  }).then((restaurant) => res.render('details', { restaurant }))
-    .catch((err) => console.log(err))
-})
-
-
-app.post('/restaurant', (req, res) => {
-  console.log(req.body.name)
-  return restaurants.create({
-    name: req.body.name,
-    name_en: req.body.name_en,
-    category: req.body.category,
-    image: req.body.image,
-    location: req.body.location,
-    phone: req.body.phone,
-    google_map: req.body.google_map,
-    rating: req.body.rating,
-    description: req.body.description
-  })
-    .then(() => res.redirect('/restaurant'))
-    .catch((err) => console.log(err))
-})
-
-app.get('/restaurant/:id', (req, res) => {
-  res.send(`get restaurant: ${req.params.id}`)
-})
-
-app.get('/restaurant/:id/edit', (req, res) => {
-  const id = req.params.id
-  return restaurants.findByPk(id, {
-    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
-    raw: true
-  })
-    .then((restaurant) => res.render('edit', { restaurant }))
-    .catch((error) => console.log(error))
-})
-
-app.put('/restaurant/:id', (req, res) => {
-  const id = req.params.id
-  return restaurants.update({
-    name: req.body.name,
-    name_en: req.body.name_en,
-    category: req.body.category,
-    image: req.body.image,
-    location: req.body.location,
-    phone: req.body.phone,
-    google_map: req.body.google_map,
-    rating: req.body.rating,
-    description: req.body.description
-  }, { where: { id } })
-    .then(() => res.redirect(`/restaurant/${id}`))
-    .catch((err) => console.log(err))
-})
 
 
 

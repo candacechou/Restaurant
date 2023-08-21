@@ -20,6 +20,7 @@ header {
   filter: blur(3px);
 }
 
+
 .search-bar .search-bar-outer {
   margin: 0 auto;
   max-width: 680px;
@@ -29,6 +30,21 @@ header {
   border: 0;
   margin-top: -60px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.secondary-bar .secondary-bar-outer {
+  margin: 0 auto;
+  max-width: 680px;
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 8px;
+  padding: 20px;
+  border: 0;
+}
+
+.secondary-bar-inner {
+  display: flex;
+  justify-content: space-between;
+
 }
 
 .search-bar .search-bar-inner h4 {
@@ -52,6 +68,7 @@ header {
 
 .card {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
 }
 
 .restaurant-category {
@@ -68,9 +85,34 @@ header {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.index-three-button {
-  margin-top: 2rem;
+.index-three-button-inner {
+  display: flex;
+  width: auto;
+  margin-top: 5%;
+  padding-top: 5%;
+  margin-bottom: 1rem;
+  text-align: center;
+  justify-content: space-around;
+  white-space: nowrap;
+  overflow-x: auto;
+  text-size-adjust: auto;
 }
+
+.modify-footer-buttom {
+  display: flex;
+  width: auto;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+.index-three-button-outer {
+  display: flex;
+  width: auto;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  justify-content: space-around;
+}
+
 
 @media screen and (max-width: 768px) {
   .restaurant-show-title {
