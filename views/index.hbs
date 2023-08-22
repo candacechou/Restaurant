@@ -2,7 +2,7 @@
 <div class="search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
-      <form action="/search">
+      <form action="/restaurant/search">
         <h4 class="mb-2">尋找餐廳：</h4>
         <div class="input-group">
           <input type="text" name="search" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
@@ -52,6 +52,7 @@
 </div>
 <!-- restaurant list -->
 <div class="container mt-5">
+  {{> message}}
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
       <div class="row row-cols-sm-3">
@@ -105,7 +106,8 @@
 </div>
 
 {{!-- page --}}
-<div class=" index-body page-footer pagination justify-content-center row" style="padding-left:10%;padding-right:10%">
+<div class=" index-body page-footer pagination justify-content-center row"
+  style="padding-left:10%;padding-right:10%; padding-bottom:10%">
   <div class="col-sm-1">
     <form method="GET" style="display: inline;">
       <input type="hidden" name="page" value="{{prev}}" type="hidden">
@@ -118,4 +120,7 @@
       <button type="submit" class="btn btn-primary">next</button>
     </form>
   </div>
+  <center>
+    <div style="padding-left:10%; padding-top:1%; padding-right:10%"> --- Page {{page}} --- </div>
+  </center>
 </div>

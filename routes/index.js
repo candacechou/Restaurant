@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
-const restaurants = require('./restaurant')
+const restaurant = require('./restaurant')
 
-router.use('/restaurant', restaurants)
+
+router.use('/restaurant', restaurant)
 router.get('/', (req, res) => {
-  res.render('index')
   res.redirect('/restaurant')
 })
 

@@ -1,7 +1,4 @@
 const express = require('express')
-const methodOverride = require('method-override')
-const { engine } = require('express-handlebars')
-
 const router = express.Router()
 
 const db = require('../models')
@@ -10,8 +7,56 @@ const restaurants = db.Restaurant
 //default
 let order_option = "A->Z"
 let page = 1
-let limit = 6
-router.use(methodOverride('_method'))
+let limit = 3
+
+
+router.get('/search', (req, res) => {
+  const keyword = req.query.search?.trim()
+  // page 
+  if (req.query.order_selection) {
+    order_option = req.query.order_selection
+    page = 1
+  }
+  if (keyword.length != 0) {
+    let stringColumnNames = Object.keys(restaurants.rawAttributes).filter(columnName => {
+      const columnType = restaurants.rawAttributes[columnName].type.key;
+      return columnType === 'STRING' || columnType === 'TEXT';
+    })
+    return restaurants.findAll(
+      {
+        attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+        raw: true,
+        offset: (page - 1) * limit,
+        limit: limit,
+        where: {
+          [Op.or]: stringColumnNames.map(key => ({
+            [key]: {
+              [Op.like]: "%" + keyword.toLowerCase() + "%"
+            }
+          }))
+        }
+      }
+    )
+      .then((restaurants) => {
+        if ((restaurants.length) > limit) {
+          page = page - 1
+        }
+        res.render('index', {
+          restaurants: restaurants,
+          prev: page > 1 ? page - 1 : page,
+          next: page + 1,
+          page: page,
+          keyword: keyword,
+          order_selection: order_option
+        })
+      })
+      .catch((err) => res.status(422).json(err))
+  }
+  else {
+    res.redirect('/restaurant')
+  }
+})
+
 
 
 router.get('/', (req, res) => {
@@ -40,7 +85,10 @@ router.get('/', (req, res) => {
   }
   // page
   if (req.query.page) {
-    page = parseInt(req.query.page) || 1
+    page = parseInt(req.query.page)
+  }
+  else {
+    page = 1
   }
 
 
@@ -48,19 +96,20 @@ router.get('/', (req, res) => {
     {
       order: [orders],
       attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
-
+      offset: (page - 1) * limit,
+      limit: limit,
       raw: true
     }
   )
     .then((restaurants) => {
       // do sorting ...
       // sort
-      if ((page * limit - restaurants.length) > limit) {
+      if (restaurants.length === 0) {
         page = page - 1
       }
       else {
         res.render('index', {
-          restaurants: restaurants.slice((page - 1) * limit, page * limit),
+          restaurants: restaurants,
           prev: page > 1 ? page - 1 : page,
           next: page + 1,
           page: page,
@@ -70,14 +119,24 @@ router.get('/', (req, res) => {
       }
 
     })
-    .catch((err) => res.status(422).json(err))
+    .catch((error) => {
+      error.errorMessage = '資料取得失敗:('
+      next(error)
+    })
 
 })
 router.delete('/:id', (req, res) => {
-  console.log("on app delete")
   const id = req.params.id
   return restaurants.destroy({ where: { id } })
-    .then(() => res.redirect('/'))
+    .then(() => {
+      console.log("!!")
+      req.flash('success', 'Successfully delete the Restaurant!')
+      return res.redirect('/restaurant')
+    })
+    .catch((error) => {
+      error.errorMessage = '刪除失敗:('
+      next(error)
+    })
 })
 
 router.get('/new', (req, res) => {
@@ -95,7 +154,6 @@ router.get('/:id', (req, res) => {
 
 
 router.post('/', (req, res) => {
-  console.log(req.body.name)
   return restaurants.create({
     name: req.body.name,
     name_en: req.body.name_en,
@@ -107,8 +165,16 @@ router.post('/', (req, res) => {
     rating: req.body.rating,
     description: req.body.description
   })
-    .then(() => res.redirect('/'))
-    .catch((err) => console.log(err))
+    .then(() => {
+      console.log("!")
+      req.flash('success', 'Successfully Add new Restaurant!')
+      return res.redirect('/restaurant')
+    })
+    .catch((error) => {
+      error.errorMessage = ' Failed to Add new Restaurant!'
+      next(error)
+      res.redirect('back')
+    })
 })
 
 router.get('/:id', (req, res) => {
@@ -122,7 +188,10 @@ router.get('/:id/edit', (req, res) => {
     raw: true
   })
     .then((restaurant) => res.render('edit', { restaurant }))
-    .catch((error) => console.log(error))
+    .catch((error) => {
+      error.errorMessage = '資料取得失敗:('
+      next(error)
+    })
 })
 
 router.put('/:id', (req, res) => {
@@ -138,8 +207,15 @@ router.put('/:id', (req, res) => {
     rating: req.body.rating,
     description: req.body.description
   }, { where: { id } })
-    .then(() => res.redirect(`/restaurant/${id}`))
-    .catch((err) => console.log(err))
+    .then(() => {
+      req.flash('success', "Successfully Edit the Restaurant!")
+      return res.redirect(`/restaurant/${id}`)
+    }
+    )
+    .catch((error) => {
+      error.errorMessage = 'Failed to  Edit the Restaurant!'
+      next(error)
+    })
 })
 
 module.exports = router;
