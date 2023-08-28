@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Restaurant.belongsTo(models.User)
     }
   }
   Restaurant.init({
@@ -22,10 +23,15 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     google_map: DataTypes.STRING,
     rating: DataTypes.FLOAT,
-    description: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Restaurant',
-  });
+    description: DataTypes.STRING,
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  },
+    {
+      sequelize,
+      modelName: 'Restaurant',
+    });
   return Restaurant;
 };

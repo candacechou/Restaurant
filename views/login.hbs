@@ -1,0 +1,44 @@
+<h1 class="mb-1 restaurant-show-title">Login</h1>
+{{> message}}
+<div class=" login-container">
+  <div class="login-form-body  wrapper ">
+    <form action="/login" method="POST">
+
+      <div class="box box1">
+        <div class="col">
+          <label for="email"><b>Email:</b></label>
+        </div>
+        <div class="col" id="login-email-input">
+          <input type="email" name="email" placeholder="Enter email" required>
+        </div>
+        <div class="col">
+          <label for="password"><b>Password:</b></label>
+        </div>
+        <div class="col" id="login-password-input">
+          <input type="password" name="password" placeholder="Enter password" required>
+        </div>
+        <center>
+          <button class="btn btn-major btn btn-outline-primary " type="submit" style="font-size: 0.9em">Login</button>
+        </center>
+      </div>
+    </form>
+  </div>
+
+  <div class="login-or-div"> or </div>
+
+  <div class="login-form-footer wrapper">
+    <center>
+      <div class="facebook-login box">
+        <form action="/oauth/login/facebook" method="GET">
+          <button class="col btn btn-major btn-primary fa fa-facebook" type="submit">
+            Facebook Login</button>
+        </form>
+
+        <div class="col">
+          <span style="font-size: 0.7em">Haven't had account yet?</span>
+          <a style="font-size: 0.7em" href="/register">Sign up</a>
+        </div>
+      </div>
+    </center>
+  </div>
+</div>

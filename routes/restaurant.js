@@ -12,6 +12,8 @@ let limit = 3
 
 router.get('/search', (req, res) => {
   const keyword = req.query.search?.trim()
+  const userId = req.user.id
+
   // page 
   if (req.query.order_selection) {
     order_option = req.query.order_selection
@@ -24,7 +26,7 @@ router.get('/search', (req, res) => {
     })
     return restaurants.findAll(
       {
-        attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+        attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId'],
         raw: true,
         offset: (page - 1) * limit,
         limit: limit,
@@ -32,7 +34,8 @@ router.get('/search', (req, res) => {
           [Op.or]: stringColumnNames.map(key => ({
             [key]: {
               [Op.like]: "%" + keyword.toLowerCase() + "%"
-            }
+            },
+            userId: userId,
           }))
         }
       }
@@ -65,6 +68,8 @@ router.get('/', (req, res) => {
     page = 1
   }
 
+  // userId
+  const userId = req.user.id
   let orders = []
   if (order_option === "A->Z") {
     orders = ['name', 'ASC']
@@ -85,7 +90,7 @@ router.get('/', (req, res) => {
   }
   // page
   if (req.query.page) {
-    page = parseInt(req.query.page)
+    page = parseInt(req.query.page) || 1
   }
   else {
     page = 1
@@ -98,6 +103,7 @@ router.get('/', (req, res) => {
       attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
       offset: (page - 1) * limit,
       limit: limit,
+      where: { userId },
       raw: true
     }
   )
@@ -107,16 +113,14 @@ router.get('/', (req, res) => {
       if (restaurants.length === 0) {
         page = page - 1
       }
-      else {
-        res.render('index', {
-          restaurants: restaurants,
-          prev: page > 1 ? page - 1 : page,
-          next: page + 1,
-          page: page,
-          keyword: "",
-          order_selection: order_option
-        })
-      }
+      res.render('index', {
+        restaurants: restaurants,
+        prev: page > 1 ? page - 1 : page,
+        next: page + 1,
+        page: page,
+        keyword: "",
+        order_selection: order_option
+      })
 
     })
     .catch((error) => {
@@ -143,19 +147,38 @@ router.get('/new', (req, res) => {
   return res.render('new')
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
   const id = req.params.id
+  const userId = req.user.id
   return restaurants.findByPk(id, {
-    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId'],
     raw: true
-  }).then((restaurant) => res.render('details', { restaurant }))
-    .catch((err) => console.log(err))
+  }).then((restaurant) => {
+    if (!restaurant) {
+      req.flash('error', 'not authorized')
+      return res.redirect('/restaurant')
+    }
+    if (restaurant.userId !== userId) {
+      req.flash('error', 'User not authorized')
+      return res.redirect('/restaurant')
+    }
+    res.render('details', { restaurant })
+  }
+  )
+    .catch((error) => {
+      error.errorMessage = '資料取得失敗:('
+      next(error)
+    })
 })
 
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
+  const name = req.body.name
+  const userId = req.user.id
+
   return restaurants.create({
     name: req.body.name,
+    userId: userId,
     name_en: req.body.name_en,
     category: req.body.category,
     image: req.body.image,
@@ -177,9 +200,6 @@ router.post('/', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
-  res.send(`get restaurant: ${req.params.id}`)
-})
 
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
@@ -194,28 +214,43 @@ router.get('/:id/edit', (req, res) => {
     })
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
   const id = req.params.id
-  return restaurants.update({
-    name: req.body.name,
-    name_en: req.body.name_en,
-    category: req.body.category,
-    image: req.body.image,
-    location: req.body.location,
-    phone: req.body.phone,
-    google_map: req.body.google_map,
-    rating: req.body.rating,
-    description: req.body.description
-  }, { where: { id } })
-    .then(() => {
-      req.flash('success', "Successfully Edit the Restaurant!")
-      return res.redirect(`/restaurant/${id}`)
+  const userId = req.user.id
+  return restaurants.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId']
+  }).then((restaurant) => {
+    if (!restaurant) {
+      req.flash('error', 'Can not find the data')
+      return res.redirect('/restaurant')
     }
-    )
-    .catch((error) => {
-      error.errorMessage = 'Failed to  Edit the Restaurant!'
-      next(error)
-    })
+    if (restaurant.userId !== userId) {
+      req.flash('error', 'not Aurthorized')
+      return res.redirect('/restaurant')
+    }
+    return restaurants.update({
+      name: req.body.name,
+      name_en: req.body.name_en,
+      category: req.body.category,
+      image: req.body.image,
+      location: req.body.location,
+      phone: req.body.phone,
+      google_map: req.body.google_map,
+      rating: req.body.rating,
+      description: req.body.description,
+      userId: userId
+    }, { where: { id } })
+      .then(() => {
+        req.flash('success', "Successfully Edit the Restaurant!")
+        return res.redirect(`/restaurant/${id}`)
+      }
+      )
+      .catch((error) => {
+        error.errorMessage = 'Failed to  Edit the Restaurant!'
+        next(error)
+      })
+  })
+
 })
 
 module.exports = router;

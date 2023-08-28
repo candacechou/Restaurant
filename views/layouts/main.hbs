@@ -11,8 +11,10 @@
 <link rel=stylesheet type="text/css" href="/stylesheets/index.css">
 <link rel=stylesheet type="text/css" href="/stylesheets/new.css">
 <link rel=stylesheet type="text/css" href="/stylesheets/details.css">
+<link rel=stylesheet type="text/css" href="/stylesheets/login.css">
 <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
 <link href='https://unpkg.com/css.gg@2.0.0/icons/css/sort-az.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Restaurant App</title>
 </head>
 
@@ -20,13 +22,25 @@
   <header>
     <!-- navigation -->
     <nav class="navbar navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="/">
+      <div class="container" style="justify-content: space-between">
+        <a class="navbar-brand" href="/restaurant">
           <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
             width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
           我的餐廳清單
         </a>
+        <div class="navbar-logout">
+
+          <a href='/logout' class="btn btn-outline-info">
+            Log out
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-arrow-bar-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8Zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5Z" />
+            </svg>
+          </a>
+        </div>
       </div>
+
     </nav>
 
     <div class="banner"></div>

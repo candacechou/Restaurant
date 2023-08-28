@@ -1,21 +1,27 @@
 <h1 class="mb-1 restaurant-show-title">New Restaurant</h1>
-<center>
-  <div class="create-form-body">
+<div class=" create-container">
+  <div class="create-form-body wrapper">
     <form action="/restaurant" method="POST" class="create-form-container">
-      <div class="create-form-div">
-        <div class="create-item-div">
-          <label>中文名稱: </label>
+      <div class="box box1">
+        <div class="col">
+          <label><b>中文名稱:</b> </label>
+        </div>
+        <div class="col" id="create-name-input">
           <input type="text" placeholder="name(CN)" name="name" required />
         </div>
 
-        <div class="create-item-div">
-          <label>英文名稱: </label>
+        <div class="col">
+          <label><b>英文名稱:</b></label>
+        </div>
+        <div class="col" id="create-name-en-input">
           <input type="text" placeholder="Name(EN)" name="name_en" required />
 
         </div>
 
-        <div class="create-item-div">
-          <label>餐廳類別: </label>
+        <div class="col">
+          <label><b>餐廳類別:</b> </label>
+        </div>
+        <div class="col" id="create-category-input">
           <select id="category" name="category" required>
             <option value="" selected disabled>--請選擇一個選項--</option>
             <option>中東料理</option>
@@ -32,36 +38,51 @@
           </select>
         </div>
 
-        <div class="create-item-div">
-          <label>照片 URL: </label>
+        <div class="col">
+          <label><b>照片url:</b> </label>
+        </div>
+        <div class="col" id="create-image-url-input">
           <input type="url" placeholder="Image URL..." name="image" required />
         </div>
 
-        <div class="create-item-div">
-          <label>餐廳住址: </label>
+        <div class="col">
+          <label><b>餐廳住址:</b> </label>
+        </div>
+        <div class="col" id="create-location-input">
           <input type="text" placeholder="Location..." name="location" required />
         </div>
 
-        <div class="create-item-div">
-          <label>電話號碼: </label>
+        <div class="col">
+          <label><b>電話號碼:</b></label>
+        </div>
+        <div class="col" id="create-telephone-input">
           <input type="tel" placeholder="Phone Number..." name="phone" required />
         </div>
 
-        <div class="create-item-div">
-          <label>谷歌地圖: </label>
+        <div class="col">
+          <label><b>谷歌地圖:</b></label>
+        </div>
+        <div class="col" id="create-google-map-input">
           <input type="url" placeholder="Google Map..." name="google_map" required />
         </div>
-        <div class="create-item-div">
-          <label>餐廳評分: </label>
+        <div class="col">
+          <label><b>餐廳評分:</b></label>
+        </div>
+        <div class="col" id="create-rate-input">
           <input type="number" placeholder="Rating..." name="rating" min="1" max="5" step="0.1" required />
         </div>
 
-        <div class="create-item-div">
-          <label>餐廳介紹: </label>
-          <input type="description" placeholder="Description" name="description" required />
+        <div class="col">
+          <label><b>餐廳介紹:</b> </label>
         </div>
-
-        <button class="btn btn-major btn-success " id="create-submit-btn" type="submit">Create</button>
-      </div>
+        <div class="col" id="create-description-input">
+          <textarea type="description" id="create-textarea-area" placeholder="Description" name="description"
+            required></textarea>
+        </div>
+        <center>
+          <button class="btn btn-major btn-primary " id="create-submit-btn" type="submit"
+            style="font: size 0.9em;">Create</button>
+        </center>
     </form>
-</center>
+  </div>
+</div>

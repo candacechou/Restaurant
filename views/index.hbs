@@ -8,7 +8,7 @@
           <input type="text" name="search" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
             value="{{keyword}}" aria-describedby="search-button">
           <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i>Search</button>
+            <button class="btn btn-major" type="submit" id="search-button"></i>Search</button>
           </div>
         </div>
       </form>
@@ -22,7 +22,7 @@
         {{!-- create new restaurant --}}
         {{#if keyword}}
         {{else}}
-        <a class="btn btn-outline-primary" href="/restaurant/new" id="create-button"><i class="fas fa-search">
+        <a class="btn btn-outline-primary" href="/restaurant/new" id="create-button"><i>
             Create
           </i></a>
         {{/if}}
@@ -64,12 +64,12 @@
             <h6 class="card-title mb-1">{{restaurant.name}}</h6>
 
             <div class="restaurant-category mb-1">
-              <i class="fas fa-utensils pr-2"></i> {{restaurant.category}}
+              <i class="fa fa-utensils pr-2"></i> {{restaurant.category}}
             </div>
             <div>
               <span class="badge rounded-pill bg-danger font-weight-normal">
                 {{restaurant.rating}}
-                <i class="fas fa-star fa-xs"></i>
+                <i class="fa fa-star fa-xs"></i>
               </span>
             </div>
           </div>

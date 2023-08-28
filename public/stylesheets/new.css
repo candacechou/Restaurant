@@ -1,16 +1,53 @@
-.create-form-div {
-  background-color: antiquewhite;
+.create-form-body,
+.modify-form-body {
+  justify-content: center;
+  display: flex;
+  margin-bottom: 0.1rem;
+}
+
+
+#create-name-input,
+#create-category-input,
+#create-name-en-input,
+#create-image-url-input,
+#create-location-input,
+#create-telephone-input,
+#create-google-map-input,
+#create-description-input,
+#create-rate-input,
+#modify-description-input,
+#modify-rate-input,
+#modify-google-map-input,
+#modify-telephone-input,
+#modify-location-input,
+#modify-image-url-input,
+#modify-category-input,
+#modify-name-en-input,
+#modify-name-input {
+  width: 100%;
+  margin-bottom: 8%;
+  margin-top: 8%;
+  display: flex-start;
+  font-size: 0.9rem;
+
+}
+
+#create-textarea-area {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 8%;
+  margin-top: 8%;
+  display: flex-start;
+}
+
+.create-container,
+.modify-container {
+  display: wrap-reverse;
+  justify-content: center;
+  padding-bottom: 8%;
+  padding-top: 2%;
   margin-left: 30%;
   margin-right: 30%;
-  margin-bottom: 10%;
-}
-
-.create-item-div {
-  padding: 1em 2em;
-  text-align: center;
-  justify-content: space-between;
-}
-
-#create-submit-btn {
-  margin-bottom: 20%;
+  background-color: antiquewhite;
+  border-radius: 25px;
 }

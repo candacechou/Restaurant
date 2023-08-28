@@ -57,21 +57,32 @@ $ cd RESTAURANT
 ```
 RESTAURANT/ $  npm install
 ```
-4.  Seed the test data.
+4. Set up Database
+
+- create restaurant table
+```
+RESTAURANT/ $ npx sequelize-cli db:migrate --name create-restaurant.js
+```
+
+- create user Table
+```
+RESTAURANT/ $ npx sequelize-cli db:migrate --name create-user.js
+```
+5.  Seed the test data.
 ```
 RESTAURANT/ $ npm run seed:create
 ```
-5. Unseed the test data.
+6. Unseed the test data.
 ```
 RESTAURANT/ $ npm run seed:undo 
 ```
-6. raise the app.js via nodemon
+7. raise the app.js via nodemon
 
 ```
 RESTAURANT/ $  npm run dev 
 ```
 
-7. to stop :
+8. to stop :
 
 ```
 RESTAURANT/ $ CTRL+C
@@ -87,3 +98,5 @@ RESTAURANT/ $ CTRL+C
 - Bootstraps
 - mysql2, sequelize, sequelize-cli
 - method-override
+- passport
+- express-session, connect-flash
