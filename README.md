@@ -57,20 +57,9 @@ $ cd RESTAURANT
 ```
 RESTAURANT/ $  npm install
 ```
-4. Set up Database
-
-- create restaurant table
+4.  Run seed data. (assuming there is no database / table)
 ```
-RESTAURANT/ $ npx sequelize-cli db:migrate --name create-restaurant.js
-```
-
-- create user Table
-```
-RESTAURANT/ $ npx sequelize-cli db:migrate --name create-user.js
-```
-5.  Seed the test data.
-```
-RESTAURANT/ $ npm run seed:create
+RESTAURANT/ $ npm run seed
 ```
 6. Un-seed the test data.
 ```

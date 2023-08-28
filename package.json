@@ -5,9 +5,15 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "dev": "export NODE_ENV=development & nodemon app.js",
+    "dev": "export NODE_ENV=development && nodemon app.js",
+    "db:build:restaurant": "npx sequelize-cli db:migrate --name create-restaurant.js",
+    "db:build:restaurant:undo": "npx sequelize-cli db:migrate:undo:all --to create-restaurant.js",
+    "db:build:user": "npx sequelize-cli db:migrate --name create-user.js",
+    "db:build:user:undo": "npx sequelize-cli db:migrate:undo:all --to create-user.js",
     "seed:create": "npx sequelize db:seed --seed restaurant-seeder.js",
-    "seed:undo": "npx sequelize db:seed:undo  --seed restaurant-seeder.js"
+    "seed:create:undo": "npx sequelize db:seed:undo --seed restaurant-seeder.js",
+    "seed": "npm run db:build:restaurant && npm run db:build:user && npm run seed:create",
+    "seed:undo": "npm run seed:create:undo && npm run db:build:user:undo && npm run db:build:restaurant:undo"
   },
   "keywords": [],
   "author": "",
