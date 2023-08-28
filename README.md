@@ -72,7 +72,7 @@ RESTAURANT/ $ npx sequelize-cli db:migrate --name create-user.js
 ```
 RESTAURANT/ $ npm run seed:create
 ```
-6. Unseed the test data.
+6. Un-seed the test data.
 ```
 RESTAURANT/ $ npm run seed:undo 
 ```

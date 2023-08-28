@@ -15,6 +15,7 @@ module.exports = {
 
     const sample = require('../public/jsons/restaurant.json');
     const user = require('../public/jsons/user.json')
+    let transaction
     let users = {};
     await Promise.all(user.results.map(async (person, index, array) => {
       const salt = await bcrypt.genSalt(10);
@@ -23,23 +24,27 @@ module.exports = {
       users[person.id] = person.collection;
       delete array[index]['collection']
     }));
-
-    await queryInterface.bulkInsert('Users', user.results, {});
-
-    sample.results.forEach(function (element, index, array) {
-      let new_id = 0
-      for (let i = 0; i < Object.keys(users).length; i++) {
-        let keysname = Object.keys(users)[i]
-        if (users[keysname].indexOf(array[index].id) !== -1) {
-          new_id = parseInt(keysname)
+    transaction = await queryInterface.sequelize.transaction();
+    try {
+      await queryInterface.bulkInsert('Users', user.results, { transaction });
+      await Promise.all(sample.results.map(async (restaurant, index, array) => {
+        let new_id = 0
+        for (let i = 0; i < Object.keys(users).length; i++) {
+          let key = Object.keys(users)[i]
+          if (users[key].indexOf(array[index].id) !== -1) {
+            new_id = parseInt(key)
+          }
         }
-      }
-      array[index].userId = new_id
-
-    })
-
-    await queryInterface.bulkInsert('restaurants', sample.results, {});
-
+        array[index].userId = new_id
+      }));
+      // insert restaurant
+      await queryInterface.bulkInsert('restaurants', sample.results, { transaction });
+      // Commit the transaction
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+      console.log(error)
+    }
 
   },
 
