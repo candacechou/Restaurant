@@ -23,7 +23,7 @@ module.exports = {
       users[person.id] = person.collection;
       delete array[index]['collection']
     }));
-    console.log(user.results)
+
     await queryInterface.bulkInsert('Users', user.results, {});
 
     sample.results.forEach(function (element, index, array) {
@@ -38,7 +38,6 @@ module.exports = {
 
     })
 
-    console.log(sample.results)
     await queryInterface.bulkInsert('restaurants', sample.results, {});
 
 
