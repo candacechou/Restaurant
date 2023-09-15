@@ -1,8 +1,9 @@
-module.exports = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next()
+module.exports = {
+  authenticator: (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return next()
+    }
+    req.flash('warning_msg', '請先登入才能使用！')
+    res.redirect('/login')
   }
-
-  req.flash('error', '尚未登入')
-  return res.redirect('/login')
 }

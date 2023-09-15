@@ -6,11 +6,11 @@ const root = require('./root')
 const oauth = require('./oauth')
 const restaurant = require('./restaurant')
 const users = require('./users')
-const authHandler = require('../middlewares/auth-handler')
+const { authenticator } = require('../middlewares/auth-handler')
 
 
 router.use('/', root)
-router.use('/restaurant', authHandler, restaurant)
+router.use('/restaurant', authenticator, restaurant)
 router.use('/users', users)
 router.use('/oauth', oauth)
 

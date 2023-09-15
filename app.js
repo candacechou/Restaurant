@@ -41,9 +41,6 @@ app.use(messageHandler)
 app.use(router)
 app.use(errorHandler)
 
-
-
-
 app.listen(port, () => {
   console.log(`express server running on <http://localhost>:${port}`)
 })
