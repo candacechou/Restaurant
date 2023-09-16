@@ -9,73 +9,87 @@ MVC (Model, View and Control) +  CRUD (create, read, update and delete) function
 ## Homepage
 
 1. On the homepage, users can view a list of all the restaurants and their details:
-
-  - photo
-  - name
-  - category
-  - rating
-  - Details
+    - photo
+    - name
+    - category
+    - rating
+    - Details
 
 ![search page](./images/index.png)
 2. Users can click on a restaurant to view its detailed information, which includes:
-
-  - Category
-  - Address
-  - Phone number
-  - Description
-  - Images
-  - Searching for Restaurants
+    - Category
+    - Address
+    - Phone number
+    - Description
+    - Images
+    - Searching for Restaurants
 
 ![search page](./images/details.png)
 
 3. Users can also find specific restaurants using specific keywords:
 
-  - Search by restaurant name.
-  - Search by restaurant category.
+    - Search by restaurant name.
+    - Search by restaurant category.
 
   
 ![search page](./images/search.png)
 4. User can create (and delete) their own restaurant.
 ![search page](./images/create.png)
 ## Seeders
-The `restaurant.json` file is not a seeder file.
+There are three test users and each of them owns 3 restaurants.
+
+- users 1
+    ```
+    "email": "user1@example.com",
+    "password": "12345678"
+    ```
+- user 2
+    ```
+    "email": "user2@example.com",
+    "password": "12345678",
+    ```
+- user 3
+    ```
+    "email": "user0@example.com",
+    "password": "12345678"
+    ```
 ## Installation 
 1. Clone this repository.
 
-``` 
-$ git clone https://github.com/candacechou/Restaurant
-```
+    ``` 
+    $ git clone https://github.com/candacechou/Restaurant
+    ```
 
 2. source into the directory
 
-```
-$ cd RESTAURANT
-```
+    ```
+    $ cd RESTAURANT
+    ```
 
 3. Install via npm
 
-```
-RESTAURANT/ $  npm install
-```
+    ```
+    RESTAURANT/ $  npm install
+    ```
 4.  Run seed data. (assuming there is no database / table)
-```
-RESTAURANT/ $ npm run seed
-```
+    ```
+    RESTAURANT/ $ npm run seed
+    ```
 6. Un-seed the test data.
-```
-RESTAURANT/ $ npm run seed:undo 
-```
+    ```
+    RESTAURANT/ $ npm run seed:undo 
+    ```
 7. raise the app.js via nodemon
 
-```
-RESTAURANT/ $  npm run dev 
-```
+    ```
+    RESTAURANT/ $  npm run dev 
+    ```
 
 8. to stop :
 
-```
-RESTAURANT/ $ CTRL+C
-```
+    ```
+    RESTAURANT/ $ CTRL+C
+    ```
 
 ## Tools
 
